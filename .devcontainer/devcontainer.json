@@ -1,11 +1,11 @@
 {
-  "name": "ROS2 Development Container",
+  "name": "Rice Robotics ROS2 Development Container",
   "privileged": true,
-  "remoteUser": "vscode",
+  "remoteUser": "robotics",
   "build": {
     "dockerfile": "Dockerfile",
     "args": {
-      "USERNAME": "vscode",
+      "USERNAME": "robotics",
       "USER_UID": "1000",
       "USER_GID": "1000"
     }
@@ -16,11 +16,12 @@
     "vscode": {
       "extensions": [
         "ms-vscode.cpptools",
-        "ms-vscode.cpptools-themes",
-        "twxs.cmake",
-        "donjayamanne.python-extension-pack",
-        "eamodio.gitlens",
-        "ms-iot.vscode-ros"
+        "ms-vscode.cmake-tools",
+        "ms-python.black-formatter",
+        "ms-python.debugpy",
+        "ms-python.vscode-pylance",
+        "ranch-hand-robotics.rde-ros-2",
+        "ranch-hand-robotics.urdf-editor"
       ]
     }
   },
@@ -41,3 +42,4 @@
   ],
   "postCreateCommand": "bash -c 'cd \"$WORKSPACE_FOLDER\" && mkdir -p src && (if [ ! -f /etc/ros/rosdep/sources.list.d/20-default.list ]; then sudo rosdep init; fi) && rosdep update && rosdep install --from-paths src --ignore-src -r -y && source /opt/ros/humble/setup.bash && colcon build && sudo chown -R $(id -u):$(id -g) .'"
 }
+
