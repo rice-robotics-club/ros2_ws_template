@@ -5,12 +5,12 @@ jobs:
     runs-on: ubuntu-latest
     env:
       PUBLIC_KEY: ''
-      ROBOT_NAME: ''
+      WS_NAME: ''
     steps:
       - run: |
+          echo "WS_NAME=$(echo "${{ github.event.repository.name }}" | rev | cut -d'_' -f2- | rev)" >> "$GITHUB_ENV"
           ssh-keygen -t ed25519 -f ./id_ed25519 -N ''
           echo "PUBLIC_KEY=$(cat ./id_ed25519.pub)" >> "$GITHUB_ENV"
-          echo "ROBOT_NAME=$(echo "${{ github.event.repository.name }}" | cut -d'_' -f1)" >> "$GITHUB_ENV"
           cat $GITHUB_ENV
       - uses: octokit/request-action@v2.x
         id: add_deploy_key
@@ -18,7 +18,7 @@ jobs:
           route: POST /repos/${{ github.repository }}/keys
           owner: ${{ github.repository_owner }}
           repo: ${{ github.event.repository.name }}
-          title: ${{ env.ROBOT_NAME }}
+          title: ${{ env.WS_NAME }}
           key: ${{ env.PUBLIC_KEY }}
           read_only: false
         env:
