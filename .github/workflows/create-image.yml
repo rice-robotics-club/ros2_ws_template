@@ -7,11 +7,13 @@ jobs:
       PUBLIC_KEY: ''
       WS_NAME: ''
     steps:
+      - uses: actions/checkout@v6
       - run: |
+          curl -L https://raw.githubusercontent.com/gitbls/sdm/master/install-sdm | bash
+          wget http://cdimage.ubuntu.com/releases/noble/release/ubuntu-24.04.4-preinstalled-server-arm64+raspi.img.xz -O ubuntu.img.xz
           echo "WS_NAME=$(echo "${{ github.event.repository.name }}" | rev | cut -d'_' -f2- | rev)" >> "$GITHUB_ENV"
           ssh-keygen -t ed25519 -f ./id_ed25519 -N ''
           echo "PUBLIC_KEY=$(cat ./id_ed25519.pub)" >> "$GITHUB_ENV"
-          cat $GITHUB_ENV
       - uses: octokit/request-action@v2.x
         id: add_deploy_key
         with:
@@ -23,3 +25,5 @@ jobs:
           read_only: false
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_PAT }}
+      - run: |
+          sdm 
