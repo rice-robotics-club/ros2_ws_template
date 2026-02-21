@@ -15,4 +15,4 @@ git-clone:repo=git@github.com:${REPO}.git|gitdir=/home/${WS_NAME}/${REPO_NAME}|u
 EOF
     ) | bash -c "cat >> ./my.plugins"
 
-sudo sdm --customize --plugin @./my.plugins --extend --xmb 2048 --restart --logwidth 256 ubuntu.img.xz
+sudo sdm --customize --plugin @./my.plugins --extend --xmb 2048 --restart --logwidth 256 ubuntu.img
