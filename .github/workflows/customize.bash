@@ -4,7 +4,7 @@ set -e
 echo "$(cat << EOM
 user:deluser=pi
 user:adduser=$WS_NAME|password=$WS_NAME
-apt-addrepo:repo=deb http://packages.ros.org/ros2/ubuntu/ noble|gpgkey=https://github.com/ros-infrastructure/ros-apt-source/raw/refs/heads/main/ros-apt-source/keys/ros2-archive-keyring.gpg
+apt-addrepo:repo=deb http://packages.ros.org/ros2/ubuntu/ noble|gpgkey=http://packages.ros.org/ros2/ubuntu/dists/noble/Release.gpg
 apps:apps=ros-jazzy-desktop
 network:ifname=wlan0|wifissid=PBS4|wifipassword=DPS2home01|wificountry=US
 network:ifname=eth0
