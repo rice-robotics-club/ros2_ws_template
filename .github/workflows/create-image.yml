@@ -29,7 +29,7 @@ jobs:
       - env:
           REPO: ${{ github.repository }}
           REPO_NAME: ${{ github.event.repository.name }}
-        run: bash .github/workflows/customize.bash
+        run: bash .github/workflows/customize.bash && cat /etc/sdm/apt.log
       - id: create_release
         uses: actions/create-release@v1
         env:
