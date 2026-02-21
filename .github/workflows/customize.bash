@@ -13,6 +13,6 @@ disables:piwiz|cloudinit
 sshkey:sshuser=${WS_NAME}|import-key=./id_ed25519|passphrase=
 git-clone:repo=git@github.com:${REPO}.git|gitdir=/home/${WS_NAME}/${REPO_NAME}|user=${WS_NAME}
 EOF
-    ) | bash -c "cat >>$assets/my.plugins"
+    ) | bash -c "cat >> ./my.plugins"
 
-sdm --customize --plugin @$assets/my.plugins --extend --xmb 2048 --restart --logwidth 256 ubuntu.img.xz
+sdm --customize --plugin @./my.plugins --extend --xmb 2048 --restart --logwidth 256 ubuntu.img.xz
