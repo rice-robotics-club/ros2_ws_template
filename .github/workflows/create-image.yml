@@ -25,17 +25,10 @@ jobs:
           read_only: false
         env:
           GITHUB_TOKEN: ${{ secrets.ADMIN_PAT }}
-      - run: |
-          sdm --customize \
-              --plugin user:"deluser=pi|adduser=${{ env.WS_NAME }}|password=${{ env.WS_NAME }}" \
-              --plugin apt-addrepo:"repo=deb  http://packages.ros.org/ros2/ubuntu/ noble|gpgkey=https://github.com/ros-infrastructure/ros-apt-source/raw/refs/heads/main/ros-apt-source/keys/ros2-archive-keyring.gpg" \
-              --plugin network:"ifname=wlan0|wifissid=PBS4|wifipassword=DPS2home01|wificountry=US|ifname=eth0" \
-              --plugin L10n:"keymap=us|locale=en_US.UTF-8|timezone=America/Chicago|wificountry=us" \
-              --plugin disables:"piwiz|cloudinit" \
-              --plugin apps:"ros-jazzy-desktop" \
-              --plugin sshkey:"sshuser=${{ env.WS_NAME }}|import-key=./id_ed25519|passphrase=" \
-              --plugin git-clone:"repo=git@github.com:${{ github.repository }}.git|gitdir=/home/${{ env.WS_NAME }}/${{ github.event.repository.name }}|user=${{ env.WS_NAME }}" \
-              --extend --xmb 2048 --restart --logwidth 256 ubuntu.img.xz
+      - env:
+          REPO: ${{ github.repository }}
+          REPO_NAME: ${{ github.event.repository.name }}
+        run: bash .github/workflows/customize.bash
       - id: create_release
         uses: actions/create-release@v1
         env:
