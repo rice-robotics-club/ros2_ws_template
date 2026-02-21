@@ -11,6 +11,7 @@ jobs:
       - run: |
           curl -L https://raw.githubusercontent.com/gitbls/sdm/master/install-sdm | bash
           wget http://cdimage.ubuntu.com/releases/noble/release/ubuntu-24.04.4-preinstalled-server-arm64+raspi.img.xz -O ubuntu.img.xz
+          unxz ubuntu.img.xz
           echo "WS_NAME=$(echo "${{ github.event.repository.name }}" | rev | cut -d'_' -f2- | rev)" >> "$GITHUB_ENV"
           ssh-keygen -t ed25519 -f ./id_ed25519 -N ''
           echo "PUBLIC_KEY=$(cat ./id_ed25519.pub)" >> "$GITHUB_ENV"
@@ -43,9 +44,9 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./ubuntu.img.xz
-          asset_name: ubuntu.img.xz
-          asset_content_type: application/x-xz
+          asset_path: ./ubuntu.img
+          asset_name: ubuntu.img
+          asset_content_type: application/x-ima
       - uses: eregon/publish-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
